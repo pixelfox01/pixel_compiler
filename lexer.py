@@ -60,6 +60,38 @@ class Lexer:
             token = Token(self.curChar, TokenType.NEWLINE)
         elif self.curChar == '\0':
             token = Token(self.curChar, TokenType.EOF)
+        elif self.curChar == '!':
+            if self.peek() != '=':
+                self.abort('Unknown Token: ' + self.curChar)
+            else:
+                last_char = self.curChar
+                self.next_char()
+                token = Token(last_char + self.curChar, TokenType.NOTEQ)
+        elif self.curChar == '>':
+            if self.peek() == '=':
+                last_char = self.curChar
+                self.next_char()
+                token = Token(last_char + self.curChar, TokenType.GTEQ)
+            else:
+                token = Token(self.curChar, TokenType.GT)
+        elif self.curChar == '<':
+            if self.peek() == '=':
+                last_char = self.curChar
+                self.next_char()
+                token = Token(last_char + self.curChar, TokenType.LTEQ)
+            else:
+                token = Token(self.curChar, TokenType.LT)
+        elif self.curChar == '\"':
+            self.next_char()
+            startPos = self.curPos
+
+            while self.curChar != '\"':
+                if self.curChar == '\r' or self.curChar == '\n' or self.curChar == '\t' or self.curChar == '\\' or self.curChar == '%':
+                    self.abort("Illegal character in string.")
+                self.next_char()
+
+            tokText = self.source[startPos : self.curPos]
+            token = Token(tokText, TokenType.STRING)
 
         else:
             self.abort('Unknown Token: ' + self.curChar)
