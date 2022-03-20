@@ -92,6 +92,20 @@ class Lexer:
 
             tokText = self.source[startPos : self.curPos]
             token = Token(tokText, TokenType.STRING)
+        elif self.curChar.isdigit():
+            startPos = self.curPos
+            while self.peek().isdigit():
+                self.next_char()
+            if self.peek() == '.':
+                self.next_char()
+                if not self.peek().isdigit():
+                    self.abort('Illegal character in number!')
+                while self.peek().isdigit():
+                    self.next_char()
+
+            token = Token(self.source[startPos:self.curPos + 1], TokenType.NUMBER)
+            
+            
 
         else:
             self.abort('Unknown Token: ' + self.curChar)
