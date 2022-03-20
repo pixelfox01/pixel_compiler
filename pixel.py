@@ -3,12 +3,11 @@ from lexer import Lexer
 
 
 def main():
-    input = 'LET foobar = 123'
-    lexer = Lexer(input)
+    code = '+- #this is a comment   \n +==-'
+    lexer = Lexer(code)
 
     while lexer.peek() != '\0':
-        print(lexer.curChar)
-        lexer.next_char()
+        print(lexer.get_token().kind)
 
 
 main()
