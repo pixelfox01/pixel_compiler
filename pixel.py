@@ -1,9 +1,8 @@
-from posixpath import lexists
 from lexer import Lexer
 
 
 def main():
-    code = '+= # this is a new comment \n \"This is a string\" 24 - 60.093854 /*'
+    code = '+= # this is a new comment \n \"This is a string\"  foobar * LET + something WHILE /*'
     lexer = Lexer(code)
 
     while lexer.peek() != '\0':

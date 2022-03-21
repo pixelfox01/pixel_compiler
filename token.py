@@ -1,11 +1,5 @@
 from enum import Enum
 
-class Token:
-    def __init__(self, tokenText, tokenKind):
-        self.text = tokenText
-        self.kind = tokenKind
-        
-
 class TokenType (Enum):
     EOF = -1
     NEWLINE = 0
@@ -36,4 +30,20 @@ class TokenType (Enum):
     LTEQ = 209
     GT = 210
     GTEQ = 211
+
+class Token:
+    def __init__(self, tokenText, tokenKind):
+        self.text = tokenText
+        self.kind = tokenKind
+
+    @staticmethod
+    def check_if_keyword(tokenText):
+        for kind in TokenType:
+            if kind.name == tokenText and kind.value >= 100 and kind.value < 200:
+                return kind
+        return None
+
+        
+
+
 

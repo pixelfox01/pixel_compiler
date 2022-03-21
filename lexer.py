@@ -34,6 +34,7 @@ class Lexer:
             while self.curChar != '\n': 
                 self.next_char()
 
+
     def get_token(self):
 
         self.skip_whitespace()
@@ -105,6 +106,19 @@ class Lexer:
 
             token = Token(self.source[startPos:self.curPos + 1], TokenType.NUMBER)
             
+        elif self.curChar.isalpha():
+            startPos = self.curPos
+            self.next_char()
+            while self.peek().isalnum():
+                self.next_char()
+            tokenText = self.source[startPos : self.curPos + 1]
+            keyword = Token.check_if_keyword(tokenText)
+
+            if keyword == None:
+                token = Token(tokenText, TokenType.IDENT)
+            else:
+                token = Token(tokenText, keyword)
+
             
 
         else:
