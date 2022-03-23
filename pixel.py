@@ -1,12 +1,13 @@
 from lexer import Lexer
+import sys
 
 
 def main():
-    code = '+= # this is a new comment \n \"This is a string\"  foobar * LET + something WHILE /*'
-    lexer = Lexer(code)
+    if len(sys.argv) != 2:
+        sys.exit('Error: Compiler needs a source code file')
+    with open(sys.argv[1], 'r') as inputFile:
+        sourceCode = inputFile.read()
 
-    while lexer.peek() != '\0':
-        print(lexer.get_token().kind)
-
+    lexer = Lexer(sourceCode)
 
 main()
